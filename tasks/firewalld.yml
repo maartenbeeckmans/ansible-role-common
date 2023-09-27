@@ -1,0 +1,26 @@
+---
+- name: Ensure firewalld is installed
+  ansible.builtin.package:
+    name: firewalld
+    state: absent
+
+# - name: Ensure firewalld service is running
+#   ansible.builtin.systemd:
+#     name: firewalld
+#     state: stopped
+#     enabled: true
+
+# - name: Ensure public zone is present
+#   ansible.posix.firewalld:
+#     zone: public
+#     state: present
+#     permanent: true
+#     target: "DROP"
+# 
+#- name: Ensure internal zone is present
+#  ansible.posix.firewalld:
+#    zone: internal
+#    state: present
+#    permanent: true
+#    source: 192.168.128.0/23
+...

@@ -1,0 +1,16 @@
+---
+- name: Ensure lm-sensors is installed
+  ansible.builtin.package:
+    name: lm-sensors
+    state: present
+
+- name: Ensure smartmontools is installed
+  ansible.builtin.package:
+    name: smartmontools
+    state: present
+
+- name: Ensure nvme-cli is installed
+  ansible.builtin.package:
+    name: nvme-cli
+    state: present
+...

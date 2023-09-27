@@ -1,0 +1,38 @@
+---
+- name: Ensure isc-dhcp-client is removed
+  ansible.builtin.package:
+    name: isc-dhcp-client
+    state: absent
+- name: Ensure isc-dhcp-common is removed
+  ansible.builtin.package:
+    name: isc-dhcp-common
+    state: absent
+- name: Set /etc/systemd/networkd.conf config
+  ansible.builtin.copy:
+    src: networkd.conf
+    dest: /etc/systemd/networkd.conf
+  notify: Reload systemd-networkd service
+- name: Ensure network configuration is present
+  ansible.builtin.template:
+    src: interface.network.j2
+    dest: "/etc/systemd/network/20-{{ item.interface_name }}.network"
+    owner: root
+    group: root
+    force: yes
+    mode: 0644
+  loop: "{{ interfaces }}"
+  notify: Reload systemd-networkd service
+- name: Ensure systemd-networkd is running
+  ansible.builtin.systemd:
+    state: started
+    enabled: true
+    name: systemd-networkd
+- name: Ensure Debian networking is disabled
+  ansible.builtin.systemd:
+    enabled: false
+    name: networking
+- name: Ensure ifupdown is removed
+  ansible.builtin.package:
+    name: ifupdown
+    state: absent
+...

@@ -1,0 +1,23 @@
+This machine is managed by Ansible
+
+FQDN:          {{ ansible_facts['fqdn'] }}
+Processor:     {{ ansible_facts['processor_cores'] }}
+System memory: {{ ansible_facts['memory_mb']['real']['total'] }} Mib
+{% if ansible_facts['memory_mb']['swap']['total'] > 0 %}
+Swap:          {{ ansible_facts['memory_mb']['swap']['total'] }} Mib
+{% endif %}
+OS:            {{ ansible_facts['distribution'] }} {{ ansible_facts['distribution_version'] }}
+Interfaces:
+{% for interface in ansible_facts['interfaces']|sort() %}
+{% if not interface in ['lo', 'ovs-system'] %}
+{% if 'ipv4' in ansible_facts[interface] %}
+               - {{ ansible_facts[interface]['device'] }}:
+                        - {{ ansible_facts[interface]['ipv4']['address'] }}/{{ ansible_facts[interface]['ipv4']['prefix'] }}
+{% endif %}
+{% endif %}
+{% endfor %}
+Mounts:
+{% for mount in ansible_facts['mounts']|sort(attribute='mount') %}
+               - {{ mount.device }} mounted on {{ mount.mount }} fs {{ mount.fstype }}
+{% endfor %}
+Kernel:        {{ ansible_facts['kernel'] }}

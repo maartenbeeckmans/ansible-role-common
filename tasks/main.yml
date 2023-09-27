@@ -1,0 +1,61 @@
+---
+- name: Set a hostname specifying strategy
+  ansible.builtin.hostname:
+    name: "{{ hostname }}"
+    use: systemd
+- name: Setup accounts
+  import_tasks: accounts.yml
+  tags: accounts
+- name: Setup ansible
+  import_tasks: ansible.yml
+  tags: ansible
+- name: Setup baremetal
+  import_tasks: baremetal.yml
+  tags: baremetal
+# - name: Setup firewall
+#   import_tasks: firewall.yml
+#   tags: firewall
+# - name: Setup firewalld
+#   import_tasks: firewalld.yml
+#   tags: firewalld
+- name: Setup hosts
+  import_tasks: hosts.yml
+  tags: hosts
+- name: Setup lvm
+  import_tasks: lvm.yml
+  tags: lvm
+- name: Setup motd
+  import_tasks: motd.yml
+  tags: motd
+- name: Setup mounts
+  import_tasks: mounts.yml
+  tags: mounts
+- name: Setup packages
+  import_tasks: packages.yml
+  tags: packages
+- name: Setup shell
+  import_tasks: shell.yml
+  tags: shell
+- name: Setup sshd
+  import_tasks: sshd.yml
+  tags: sshd
+# @TODO enable sshd
+- name: Setup systemd_journald
+  import_tasks: systemd_journald.yml
+  tags: systemd_journald
+- name: Setup systemd_networkd
+  import_tasks: systemd_networkd.yml
+  tags: systemd_networkd
+- name: Setup systemd_resolved
+  import_tasks: systemd_resolved.yml
+  tags: systemd_resolved
+- name: Setup systemd_timesyncd
+  import_tasks: systemd_timesyncd.yml
+  tags: systemd_timesyncd
+- name: Setup systemd_timezone
+  import_tasks: timezone.yml
+  tags: timezone
+# - name: Setup vm
+#   import_tasks: vm.yml
+#   tags: vm
+...

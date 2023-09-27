@@ -1,0 +1,5 @@
+---
+# VM specific tasks
+# @TODO disable and remove lm_sensors
+# @TODO install libvirt/qemu client tools
+...

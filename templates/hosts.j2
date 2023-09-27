@@ -1,0 +1,6 @@
+# File managed by Ansible
+# Manual changes will be overwritten
+127.0.0.1       localhost       localhost.localdomain       
+127.0.1.1       {{ ansible_facts['fqdn'] }}
+255.255.255.255 broadcasthost
+::1             localhost       localhost.localdomain

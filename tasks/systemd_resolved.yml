@@ -1,0 +1,21 @@
+---
+- name: Ensure systemd-resolved is installed
+  ansible.builtin.package:
+    state: present
+    name: systemd-resolved
+- name: Set /etc/systemd/resolved.conf template
+  ansible.builtin.template:
+     src: templates/resolved.conf.j2
+     dest: /etc/systemd/resolved.conf
+  notify: Reload systemd-resolved service
+- name: Ensure systemd-resolved is running
+  ansible.builtin.service:
+    name: systemd-resolved.service
+    state: started
+    enabled: true
+- name: Create symbolic link to  /etc/systemd/resolved.conf
+  ansible.builtin.file:
+    state: link
+    src: /run/systemd/resolve/stub-resolv.conf
+    dest: /etc/resolv.conf
+...

@@ -1,0 +1,14 @@
+---
+- name: Ensure bashrc is installed
+  ansible.builtin.copy:
+    src: bashrc
+    dest: /etc/bashrc
+- name: Ensure global_bashrc.sh is installed
+  ansible.builtin.copy:
+    src: global_bashrc.sh
+    dest: /etc/profile.d/global_bashrc.sh
+- name: Ensure history.sh is installed
+  ansible.builtin.copy:
+    src: history.sh
+    dest: /etc/profile.d/history.sh
+...

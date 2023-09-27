@@ -1,0 +1,55 @@
+---
+- name: Ensure users group exists
+  ansible.builtin.group:
+    state: present
+    name: users
+    gid: "{{ gid_users }}"
+
+- name: Ensure wheel group exists
+  ansible.builtin.group:
+    state: present
+    name: wheel
+    gid: "{{ gid_wheel }}"
+
+- name: Ensure groups exists
+  ansible.builtin.group:
+    state: "{{ item['state'] }}"
+    name: "{{ item['name'] }}"
+    gid: "{{ lookup('ansible.builtin.vars', 'gid_' + item['name']) }}"
+  loop: "{{ common_groups }}"
+
+- name: Ensure sudo rules for wheel exists
+  community.general.sudoers:
+    name: wheel
+    state: present
+    group: wheel
+    nopassword: true
+    commands: ALL
+
+# Password hashes can be generated with `mkpasswd --method=sha-512`
+- name: Set root password
+  ansible.builtin.user:
+    state: present
+    name: root
+    password: "{{ lookup('ansible.builtin.vars', 'password_hash_root', default='!') }}"
+    update_password: 'always'
+
+- name: Ensure user accounts
+  ansible.builtin.user:
+    state: "{{ item['state'] }}"
+    name: "{{ item['name'] }}"
+    password: "{{ lookup('ansible.builtin.vars', 'password_hash_' + item['name'], default='!') }}"
+    comment: "{{ item['comment'] }}"
+    uid: "{{ lookup('ansible.builtin.vars', 'uid_' + item['name']) }}"
+    group: "{{ item['group'] }}"
+    groups: "{{ item['groups'] }}"
+    append: false
+  loop: "{{ common_users }}"
+
+- name: Ensure ssh keys
+  ansible.posix.authorized_key:
+    state: "{{ item['state'] }}"
+    user: "{{ item['name'] }}"
+    key: "{{ lookup('ansible.builtin.vars', 'ssh_key_' + item['name']) }}"
+  loop: "{{ common_users }}"
+...

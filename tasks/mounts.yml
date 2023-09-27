@@ -1,0 +1,23 @@
+---
+- name: Create filesystems
+  community.general.filesystem:
+    fstype: "{{ item['fstype'] }}"
+    dev: "{{ item['src'] }}"
+  loop: "{{ mounts }}"
+- name: Create mount directories
+  ansible.builtin.file:
+    state: directory
+    path: "{{ item['path'] }}"
+    owner: "{{ item['owner'] }}"
+    group: "{{ item['group'] }}"
+    mode: "{{ item['mode'] }}"
+  loop: "{{ mounts }}"
+- name: Mount disks
+  ansible.posix.mount:
+    state: "{{ item['state'] }}"
+    path: "{{ item['path'] }}"
+    src: "{{ item['src'] }}"
+    fstype: "{{ item['fstype'] }}"
+    opts: "{{ item['opts'] }}"
+  loop: "{{ mounts }}"
+...

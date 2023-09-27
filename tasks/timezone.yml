@@ -1,0 +1,5 @@
+---
+- name: Set timezone to Europe/Brussels
+  community.general.timezone:
+    name: Europe/Brussels
+...

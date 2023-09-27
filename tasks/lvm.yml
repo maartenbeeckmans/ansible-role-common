@@ -1,0 +1,15 @@
+---
+- name: Create lvm volume groups
+  community.general.lvg:
+    state: "{{ item['state'] }}"
+    vg: "{{ item['name'] }}"
+    pvs: "{{ item['pvs'] }}"
+  loop: "{{ vgs }}"
+- name: Create lvm logical volumes
+  community.general.lvol:
+    state: "{{ item['state'] }}"
+    vg: "{{ item['vg'] }}"
+    lv: "{{ item['name'] }}"
+    size: "{{ item['size'] }}"
+  loop: "{{ lvs }}"
+...

@@ -1,0 +1,28 @@
+---
+- name: Ensure ssh group exists
+  ansible.builtin.group:
+    state: present
+    name: ssh
+    gid: "{{ gid_ssh }}"
+- name: Ensure sshd-banner is installed
+  ansible.builtin.copy:
+    src: sshd-banner
+    dest: /etc/ssh/sshd-banner
+- name: Set sshd config file
+  ansible.builtin.template:
+     src: templates/sshd.conf.j2
+     dest: /etc/ssh/sshd_config
+  notify: Reload sshd service
+- name: Ensure sshd is running
+  ansible.builtin.service:
+    name: sshd.service
+    state: started
+    enabled: true
+# - name: Open sshd firewall
+#   ansible.posix.firewalld:
+#     rich_rule: rule family=ipv4 source address=0.0.0.0/24 service name=ssh log prefix="SSH Access" level="notice" accept
+#     zone: public
+#     permanent: true
+#     immediate: true
+#     state: enabled
+...

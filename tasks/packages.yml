@@ -1,0 +1,37 @@
+---
+- name: Ensure cloud-init is removed
+  ansible.builtin.package:
+    name: cloud-init
+    state: absent
+- name: Ensure basic packages are installed
+  ansible.builtin.package:
+    name:
+      - apt-file
+      - bc
+      - curl
+      - dnsutils
+      - ethtool
+      - htop
+      - httpie
+      - iftop
+      - iotop
+      - iperf3
+      - jq
+      - ncdu
+      - net-tools
+      - nmap
+      - psmisc
+      - ripgrep
+      - silversearcher-ag
+      - sysstat
+      - tar
+      - tcpdump
+      - telnet
+      - tmux
+      - tree
+      - unzip
+      - vim
+      - wget
+      - xz-utils
+    state: latest
+...

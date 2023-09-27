@@ -1,0 +1,37 @@
+---
+- name: Ensure ansible group exists
+  ansible.builtin.group:
+    state: present
+    name: ansible
+    gid: "{{ gid_ansible }}"
+    system: true
+
+- name: Ensure ansible user exists
+  ansible.builtin.user:
+    state: present
+    name: ansible
+    uid: "{{ uid_ansible }}"
+    comment: Ansible user
+    group: ansible
+    groups: ssh
+    system: true
+    create_home: true
+    home: /var/lib/ansible
+    password: '!'
+    shell: /bin/bash
+
+- name: Ensure ansible ssh key is present
+  ansible.posix.authorized_key:
+    user: ansible
+    state: present
+    comment: ansible ssh key
+    key: "{{ lookup('ansible.builtin.vars', 'ssh_key_ansible') }}"
+
+- name: Ensure ansible sudo rule is present
+  community.general.sudoers:
+    name: ansible
+    state: present
+    user: ansible
+    nopassword: true
+    commands: ALL
+...
