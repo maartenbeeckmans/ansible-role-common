@@ -1,5 +1,15 @@
 ---
-# VM specific tasks
-# @TODO disable and remove lm_sensors
-# @TODO install libvirt/qemu client tools
+- name: Ensure lm-sensors is removed
+  ansible.builtin.package:
+    name: lm-sensors
+    state: absent
+- name: Ensure qemu-guest-agent is removed
+  ansible.builtin.package:
+    name: qemu-guest-agent
+    state: present
+- name: Ensure qemu-guest-agent is running
+  ansible.builtin.service:
+    name: qemu-guest-agent.service
+    state: started
+    enabled: true
 ...

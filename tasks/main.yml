@@ -12,6 +12,7 @@
 - name: Setup baremetal
   import_tasks: baremetal.yml
   tags: baremetal
+  when: ansible_facts['virtualization_role'] == "host"
 # - name: Setup firewall
 #   import_tasks: firewall.yml
 #   tags: firewall
@@ -55,7 +56,8 @@
 - name: Setup systemd_timezone
   import_tasks: timezone.yml
   tags: timezone
-# - name: Setup vm
-#   import_tasks: vm.yml
-#   tags: vm
+- name: Setup vm
+  import_tasks: vm.yml
+  tags: vm
+  when: ansible_facts['virtualization_role'] == "guest"
 ...
