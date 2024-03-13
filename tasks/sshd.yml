@@ -1,9 +1,4 @@
 ---
-- name: Ensure ssh group exists
-  ansible.builtin.group:
-    state: present
-    name: ssh
-    gid: "{{ gid_ssh }}"
 - name: Ensure sshd-banner is installed
   ansible.builtin.copy:
     src: sshd-banner
