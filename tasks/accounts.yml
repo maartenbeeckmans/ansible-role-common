@@ -1,15 +1,15 @@
 ---
-- name: Ensure users group exists
-  ansible.builtin.group:
-    state: present
-    name: users
-    gid: "{{ gid_users }}"
-
 - name: Ensure wheel group exists
   ansible.builtin.group:
     state: present
     name: wheel
     gid: "{{ gid_wheel }}"
+
+- name: Ensure ssh group exists
+  ansible.builtin.group:
+    state: present
+    name: ssh
+    gid: "{{ gid_ssh }}"
 
 - name: Ensure groups exists
   ansible.builtin.group:
@@ -43,6 +43,7 @@
     uid: "{{ lookup('ansible.builtin.vars', 'uid_' + item['name']) }}"
     group: "{{ item['group'] }}"
     groups: "{{ item['groups'] }}"
+    shell: "/bin/bash"
     append: false
   loop: "{{ common_users }}"
 
@@ -50,6 +51,6 @@
   ansible.posix.authorized_key:
     state: "{{ item['state'] }}"
     user: "{{ item['name'] }}"
-    key: "{{ lookup('ansible.builtin.vars', 'ssh_key_' + item['name']) }}"
+    key: "{{ lookup('ansible.builtin.vars', 'ssh_key_' + item['name'], default='') }}"
   loop: "{{ common_users }}"
 ...
