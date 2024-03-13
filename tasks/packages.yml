@@ -23,6 +23,7 @@
       - psmisc
       - ripgrep
       - silversearcher-ag
+      - sudo
       - sysstat
       - tar
       - tcpdump
