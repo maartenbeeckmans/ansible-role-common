@@ -40,7 +40,6 @@
 - name: Setup sshd
   import_tasks: sshd.yml
   tags: sshd
-# @TODO enable sshd
 - name: Setup systemd_journald
   import_tasks: systemd_journald.yml
   tags: systemd_journald
