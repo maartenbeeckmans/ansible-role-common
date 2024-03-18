@@ -19,4 +19,5 @@
     state: link
     src: /run/systemd/resolve/stub-resolv.conf
     dest: /etc/resolv.conf
+    force: true
 ...
