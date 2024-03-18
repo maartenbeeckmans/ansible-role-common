@@ -3,7 +3,7 @@
   ansible.builtin.package:
     name: cloud-init
     state: absent
-- name: Ensure basic packages are installed
+- name: Ensure basic packages are installed (Debian)
   ansible.builtin.package:
     name:
       - apt-file
@@ -35,4 +35,41 @@
       - wget
       - xz-utils
     state: latest
+  when: ansible_distribution == 'Debian'
+- name: Ensure basic packages are installed (ArchLinux)
+  ansible.builtin.package:
+    name:
+      - bash-completion
+      - bc
+      - curl
+      - dnsutils
+      - ethtool
+      - htop
+      - httpie
+      - iftop
+      - inetutils
+      - inetutils
+      - iotop
+      - iperf3
+      - jq
+      - less
+      - ncdu
+      - net-tools
+      - nmap
+      - psmisc
+      - ripgrep
+      - sed
+      - sudo
+      - sysstat
+      - tar
+      - tcpdump
+      - the_silver_searcher
+      - tmux
+      - tree
+      - unzip
+      - vim
+      - wget
+      - xz
+    state: latest
+  when: ansible_distribution == 'Archlinux'
 ...

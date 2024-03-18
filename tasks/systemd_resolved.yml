@@ -3,6 +3,7 @@
   ansible.builtin.package:
     state: present
     name: systemd-resolved
+  when: ansible_distribution == 'Debian'
 - name: Set /etc/systemd/resolved.conf template
   ansible.builtin.template:
      src: templates/resolved.conf.j2

@@ -7,6 +7,10 @@
   ansible.builtin.package:
     name: isc-dhcp-common
     state: absent
+- name: Ensure dhclient is removed
+  ansible.builtin.package:
+    name: dhclient
+    state: absent
 - name: Set /etc/systemd/networkd.conf config
   ansible.builtin.copy:
     src: networkd.conf
@@ -31,6 +35,7 @@
   ansible.builtin.systemd:
     enabled: false
     name: networking
+  when: ansible_distribution == 'Debian'
 - name: Ensure ifupdown is removed
   ansible.builtin.package:
     name: ifupdown

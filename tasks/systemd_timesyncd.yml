@@ -3,6 +3,7 @@
   ansible.builtin.package:
     state: present
     name: systemd-timesyncd
+  when: ansible_distribution == 'Debian'
 - name: Set /etc/systemd/timesyncd.conf config
   ansible.builtin.copy:
     src: timesyncd.conf
