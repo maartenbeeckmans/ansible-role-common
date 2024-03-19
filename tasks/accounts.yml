@@ -53,4 +53,5 @@
     user: "{{ item['name'] }}"
     key: "{{ lookup('ansible.builtin.vars', 'ssh_key_' + item['name'], default='') }}"
   loop: "{{ common_users }}"
+
 ...

@@ -15,6 +15,7 @@
   ansible.builtin.copy:
     src: networkd.conf
     dest: /etc/systemd/networkd.conf
+    mode: 'u=rw,g=r,o=r'
   notify: Reload systemd-networkd service
 - name: Ensure network configuration is present
   ansible.builtin.template:
@@ -22,8 +23,8 @@
     dest: "/etc/systemd/network/20-{{ item.interface_name }}.network"
     owner: root
     group: root
-    force: yes
-    mode: 0644
+    force: true
+    mode: 'u=rw,g=r,o=r'
   loop: "{{ interfaces }}"
   notify: Reload systemd-networkd service
 - name: Ensure systemd-networkd is running
@@ -40,4 +41,5 @@
   ansible.builtin.package:
     name: ifupdown
     state: absent
+
 ...

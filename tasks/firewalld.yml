@@ -16,11 +16,12 @@
 #     state: present
 #     permanent: true
 #     target: "DROP"
-# 
-#- name: Ensure internal zone is present
-#  ansible.posix.firewalld:
-#    zone: internal
-#    state: present
-#    permanent: true
-#    source: 192.168.128.0/23
+
+# - name: Ensure internal zone is present
+#   ansible.posix.firewalld:
+#     zone: internal
+#     state: present
+#     permanent: true
+#     source: 192.168.128.0/23
+
 ...

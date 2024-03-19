@@ -4,59 +4,60 @@
     name: "{{ hostname }}"
     use: systemd
 - name: Setup accounts
-  import_tasks: accounts.yml
+  ansible.builtin.import_tasks: accounts.yml
   tags: accounts
 - name: Setup ansible
-  import_tasks: ansible.yml
+  ansible.builtin.import_tasks: ansible.yml
   tags: ansible
 - name: Setup baremetal
-  import_tasks: baremetal.yml
+  ansible.builtin.import_tasks: baremetal.yml
   tags: baremetal
   when: ansible_facts['virtualization_role'] == "host"
 # - name: Setup firewall
-#   import_tasks: firewall.yml
+#   ansible.builtin.import_tasks: firewall.yml
 #   tags: firewall
 # - name: Setup firewalld
-#   import_tasks: firewalld.yml
+#   ansible.builtin.import_tasks: firewalld.yml
 #   tags: firewalld
 - name: Setup hosts
-  import_tasks: hosts.yml
+  ansible.builtin.import_tasks: hosts.yml
   tags: hosts
 - name: Setup lvm
-  import_tasks: lvm.yml
+  ansible.builtin.import_tasks: lvm.yml
   tags: lvm
 - name: Setup motd
-  import_tasks: motd.yml
+  ansible.builtin.import_tasks: motd.yml
   tags: motd
 - name: Setup mounts
-  import_tasks: mounts.yml
+  ansible.builtin.import_tasks: mounts.yml
   tags: mounts
 - name: Setup packages
-  import_tasks: packages.yml
+  ansible.builtin.import_tasks: packages.yml
   tags: packages
 - name: Setup shell
-  import_tasks: shell.yml
+  ansible.builtin.import_tasks: shell.yml
   tags: shell
 - name: Setup sshd
-  import_tasks: sshd.yml
+  ansible.builtin.import_tasks: sshd.yml
   tags: sshd
 - name: Setup systemd_journald
-  import_tasks: systemd_journald.yml
+  ansible.builtin.import_tasks: systemd_journald.yml
   tags: systemd_journald
 - name: Setup systemd_networkd
-  import_tasks: systemd_networkd.yml
+  ansible.builtin.import_tasks: systemd_networkd.yml
   tags: systemd_networkd
 - name: Setup systemd_resolved
-  import_tasks: systemd_resolved.yml
+  ansible.builtin.import_tasks: systemd_resolved.yml
   tags: systemd_resolved
 - name: Setup systemd_timesyncd
-  import_tasks: systemd_timesyncd.yml
+  ansible.builtin.import_tasks: systemd_timesyncd.yml
   tags: systemd_timesyncd
 - name: Setup systemd_timezone
-  import_tasks: timezone.yml
+  ansible.builtin.import_tasks: timezone.yml
   tags: timezone
 - name: Setup vm
-  import_tasks: vm.yml
+  ansible.builtin.import_tasks: vm.yml
   tags: vm
   when: ansible_facts['virtualization_role'] == "guest"
+
 ...

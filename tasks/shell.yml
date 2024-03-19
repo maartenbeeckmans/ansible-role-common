@@ -3,12 +3,16 @@
   ansible.builtin.copy:
     src: bashrc
     dest: /etc/bashrc
+    mode: 'u=rw,g=r,o=r'
 - name: Ensure global_bashrc.sh is installed
   ansible.builtin.copy:
     src: global_bashrc.sh
     dest: /etc/profile.d/global_bashrc.sh
+    mode: 'u=rw,g=r,o=r'
 - name: Ensure history.sh is installed
   ansible.builtin.copy:
     src: history.sh
     dest: /etc/profile.d/history.sh
+    mode: 'u=rw,g=r,o=r'
+
 ...

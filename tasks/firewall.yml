@@ -16,7 +16,7 @@
   ansible.builtin.pip:
     name: 'ansibleguy-nftables'
     state: present
-    extra_args: '--break-system-packages' # @TODO package this
+    extra_args: '--break-system-packages' #  @TODO package this
 - name: Enabling and starting NFTables
   ansible.builtin.service:
     name: 'nftables.service'
@@ -29,7 +29,7 @@
     name: input
     type: filter
     hook: input
-    priority: filter 
+    priority: filter
     policy: accept
 # - name: Ensure forward chain exists
 #   ansibleguy.nftables.chain:
@@ -97,4 +97,5 @@
 #     chain: 'input'
 #     table: 'inet-filter'
 #     rule: 'icmpv6 type { nd-neighbor-solicit, nd-router-advert, nd-neighbor-advert } accept comment "Accept ipv6 neighbour discovery"'
+
 ...

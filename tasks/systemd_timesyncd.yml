@@ -8,10 +8,12 @@
   ansible.builtin.copy:
     src: timesyncd.conf
     dest: /etc/systemd/timesyncd.conf
+    mode: 'u=rw,g=r,o=r'
   notify: Reload systemd-timesyncd service
 - name: Ensure systemd-timesyncd is running
   ansible.builtin.service:
     name: systemd-timesyncd.service
     state: started
     enabled: true
+
 ...

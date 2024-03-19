@@ -3,10 +3,12 @@
   ansible.builtin.copy:
     src: sshd-banner
     dest: /etc/ssh/sshd-banner
+    mode: 'u=rw,g=r,o=r'
 - name: Set sshd config file
   ansible.builtin.template:
-     src: templates/sshd.conf.j2
-     dest: /etc/ssh/sshd_config
+    src: templates/sshd.conf.j2
+    dest: /etc/ssh/sshd_config
+    mode: 'u=rw,g=r,o=r'
   notify: Reload sshd service
 - name: Ensure sshd is running
   ansible.builtin.service:
@@ -20,4 +22,5 @@
 #     permanent: true
 #     immediate: true
 #     state: enabled
+
 ...

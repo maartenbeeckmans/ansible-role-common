@@ -20,4 +20,5 @@
     fstype: "{{ item['fstype'] }}"
     opts: "{{ item['opts'] }}"
   loop: "{{ mounts }}"
+
 ...

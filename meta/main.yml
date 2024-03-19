@@ -1,7 +1,23 @@
 ---
-collections:
-  - ansible.posix
-  - community.general
-  - ansibleguy.nftables
-  - openvswitch.openvswitch
+galaxy_info:
+  role_name: common
+  namespace: maartenb
+  author: Maarten Beeckmans
+  description: >
+    Common role for all servers
+  license: BSD
+  min_ansible_version: "2.7"
+  platforms:
+    - name: ArchLinux
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - bullseye
+        - bookworm
+  galaxy_tags:
+    - common
+    - linux
+    - system
+dependencies: []
 ...

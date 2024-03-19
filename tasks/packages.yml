@@ -34,7 +34,7 @@
       - vim
       - wget
       - xz-utils
-    state: latest
+    state: present
   when: ansible_distribution == 'Debian'
 - name: Ensure basic packages are installed (ArchLinux)
   ansible.builtin.package:
@@ -70,6 +70,7 @@
       - vim
       - wget
       - xz
-    state: latest
+    state: present
   when: ansible_distribution == 'Archlinux'
+
 ...

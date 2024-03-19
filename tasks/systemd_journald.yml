@@ -3,10 +3,12 @@
   ansible.builtin.copy:
     src: journald.conf
     dest: /etc/systemd/journald.conf
+    mode: 'u=rw,g=r,o=r'
   notify: Reload systemd-journald service
 - name: Ensure systemd-journald is running
   ansible.builtin.service:
     name: systemd-journald.service
     state: started
     enabled: true
+
 ...
