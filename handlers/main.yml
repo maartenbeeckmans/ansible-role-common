@@ -3,21 +3,25 @@
   ansible.builtin.systemd:
     name: sshd.service
     state: restarted
+  when: "'ansible_skip_handlers' not in ansible_skip_tags"
 - name: Reload systemd-networkd service
   ansible.builtin.systemd:
     name: systemd-networkd.service
     state: restarted
+  when: "'ansible_skip_handlers' not in ansible_skip_tags"
 - name: Reload systemd-journald service
   ansible.builtin.systemd:
     name: systemd-journald.service
     state: restarted
+  when: "'ansible_skip_handlers' not in ansible_skip_tags"
 - name: Reload systemd-resolved service
   ansible.builtin.systemd:
     name: systemd-resolved.service
     state: restarted
+  when: "'ansible_skip_handlers' not in ansible_skip_tags"
 - name: Reload systemd-timesyncd service
   ansible.builtin.systemd:
     name: systemd-timesyncd.service
     state: restarted
-
+  when: "'ansible_skip_handlers' not in ansible_skip_tags"
 ...
