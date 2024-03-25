@@ -25,7 +25,7 @@
     group: root
     force: true
     mode: 'u=rw,g=r,o=r'
-  loop: "{{ interfaces }}"
+  loop: "{{ common_interfaces }}"
   notify: Reload systemd-networkd service
 - name: Ensure systemd-networkd is running
   ansible.builtin.systemd:

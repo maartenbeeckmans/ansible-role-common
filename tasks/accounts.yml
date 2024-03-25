@@ -3,13 +3,13 @@
   ansible.builtin.group:
     state: present
     name: wheel
-    gid: "{{ gid_wheel }}"
+    gid: "{{ common_gid_wheel }}"
 
 - name: Ensure ssh group exists
   ansible.builtin.group:
     state: present
     name: ssh
-    gid: "{{ gid_ssh }}"
+    gid: "{{ common_gid_ssh }}"
 
 - name: Ensure groups exists
   ansible.builtin.group:
@@ -31,14 +31,14 @@
   ansible.builtin.user:
     state: present
     name: root
-    password: "{{ lookup('ansible.builtin.vars', 'password_hash_root', default='!') }}"
+    password: "{{ lookup('ansible.builtin.vars', 'common_password_hash_root', default='!') }}"
     update_password: 'always'
 
 - name: Ensure user accounts
   ansible.builtin.user:
     state: "{{ item['state'] }}"
     name: "{{ item['name'] }}"
-    password: "{{ lookup('ansible.builtin.vars', 'password_hash_' + item['name'], default='!') }}"
+    password: "{{ lookup('ansible.builtin.vars', 'common_password_hash_' + item['name'], default='!') }}"
     comment: "{{ item['comment'] }}"
     uid: "{{ lookup('ansible.builtin.vars', 'uid_' + item['name']) }}"
     group: "{{ item['group'] }}"
@@ -51,7 +51,7 @@
   ansible.posix.authorized_key:
     state: "{{ item['state'] }}"
     user: "{{ item['name'] }}"
-    key: "{{ lookup('ansible.builtin.vars', 'ssh_key_' + item['name'], default='') }}"
+    key: "{{ lookup('ansible.builtin.vars', 'common_ssh_key_' + item['name'], default='') }}"
   loop: "{{ common_users }}"
 
 ...

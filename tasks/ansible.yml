@@ -3,14 +3,14 @@
   ansible.builtin.group:
     state: present
     name: ansible
-    gid: "{{ gid_ansible }}"
+    gid: "{{ common_gid_ansible }}"
     system: true
 
 - name: Ensure ansible user exists
   ansible.builtin.user:
     state: present
     name: ansible
-    uid: "{{ uid_ansible }}"
+    uid: "{{ common_uid_ansible }}"
     comment: Ansible user
     group: ansible
     groups: ssh
@@ -25,7 +25,7 @@
     user: ansible
     state: present
     comment: ansible ssh key
-    key: "{{ lookup('ansible.builtin.vars', 'ssh_key_ansible') }}"
+    key: "{{ lookup('ansible.builtin.vars', 'common_ssh_key_ansible') }}"
 
 - name: Ensure ansible sudo rule is present
   community.general.sudoers:

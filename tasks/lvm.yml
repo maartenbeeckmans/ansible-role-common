@@ -4,7 +4,7 @@
     state: "{{ item['state'] }}"
     vg: "{{ item['name'] }}"
     pvs: "{{ item['pvs'] }}"
-  loop: "{{ vgs }}"
+  loop: "{{ common_vgs }}"
 
 - name: Create lvm logical volumes
   community.general.lvol:
@@ -12,6 +12,6 @@
     vg: "{{ item['vg'] }}"
     lv: "{{ item['name'] }}"
     size: "{{ item['size'] }}"
-  loop: "{{ lvs }}"
+  loop: "{{ common_lvs }}"
 
 ...

@@ -3,7 +3,7 @@
   community.general.filesystem:
     fstype: "{{ item['fstype'] }}"
     dev: "{{ item['src'] }}"
-  loop: "{{ mounts }}"
+  loop: "{{ common_mounts }}"
 - name: Create mount directories
   ansible.builtin.file:
     state: directory
@@ -11,7 +11,7 @@
     owner: "{{ item['owner'] }}"
     group: "{{ item['group'] }}"
     mode: "{{ item['mode'] }}"
-  loop: "{{ mounts }}"
+  loop: "{{ common_mounts }}"
 - name: Mount disks
   ansible.posix.mount:
     state: "{{ item['state'] }}"
@@ -19,6 +19,6 @@
     src: "{{ item['src'] }}"
     fstype: "{{ item['fstype'] }}"
     opts: "{{ item['opts'] }}"
-  loop: "{{ mounts }}"
+  loop: "{{ common_mounts }}"
 
 ...
