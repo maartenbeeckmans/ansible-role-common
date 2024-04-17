@@ -40,6 +40,9 @@
 - name: Setup sshd
   ansible.builtin.import_tasks: sshd.yml
   tags: sshd
+- name: Setup sudo
+  ansible.builtin.import_tasks: sudo.yml
+  tags: sudo
 - name: Setup systemd_journald
   ansible.builtin.import_tasks: systemd_journald.yml
   tags: systemd_journald

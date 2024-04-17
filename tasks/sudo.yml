@@ -1,0 +1,15 @@
+---
+- name: Ensure sudoers config file is installed
+  ansible.builtin.copy:
+    src: sudoers
+    dest: /etc/sudoers
+    mode: 'u=r,g=r'
+
+- name: Ensure sudo rules for wheel exists
+  community.general.sudoers:
+    name: wheel
+    state: present
+    group: wheel
+    nopassword: true
+    commands: ALL
+...

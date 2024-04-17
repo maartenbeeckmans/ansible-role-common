@@ -18,14 +18,6 @@
     gid: "{{ lookup('ansible.builtin.vars', 'gid_' + item['name']) }}"
   loop: "{{ common_groups }}"
 
-- name: Ensure sudo rules for wheel exists
-  community.general.sudoers:
-    name: wheel
-    state: present
-    group: wheel
-    nopassword: true
-    commands: ALL
-
 # Password hashes can be generated with `mkpasswd --method=sha-512`
 - name: Set root password
   ansible.builtin.user:
