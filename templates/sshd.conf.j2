@@ -14,3 +14,11 @@ PrintMotd no
 UsePAM yes
 X11Forwarding no
 Subsystem sftp /usr/lib/openssh/sftp-server
+{% for sshd_match in common_sshd_matches %}
+
+Match {% if 'match_user' in sshd_match %}User {{ sshd_match.match_user }} {% endif %}Address {{ sshd_match.match_addresses | join(',') }}
+{% if 'permitRootLogin' in sshd_match%}
+  PermitRootLogin yes
+{% endif %}
+  PubkeyAuthentication yes
+{% endfor %}
