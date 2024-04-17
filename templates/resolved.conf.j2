@@ -1,8 +1,8 @@
 # File managed by Ansible
 # Manual changes will be overwritten
 [Resolve]
-DNS={{ dns_servers|join(' ') }}
-FallbackDNS={{ fallback_dns_servers|join(' ') }}
+DNS={{ common_dns_servers | join(' ') }}
+FallbackDNS={{ common_fallback_dns_servers | join(' ') }}
 DNSSEC=allow-downgrade
 DNSOverTLS=opportunistic
 Cache=no-negative
