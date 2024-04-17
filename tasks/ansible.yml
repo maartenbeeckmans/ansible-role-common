@@ -20,12 +20,12 @@
     password: '!'
     shell: /bin/bash
 
-- name: Ensure ansible ssh key is present
+- name: Ensure ansible ssh keys
   ansible.posix.authorized_key:
-    user: ansible
-    state: present
-    comment: ansible ssh key
-    key: "{{ lookup('ansible.builtin.vars', 'common_ssh_key_ansible') }}"
+    state: "present"
+    user: "ansible"
+    key: "{{ item }}"
+  loop: "{{ common_ansible_ssh_authorized_keys }}"
 
 - name: Ensure ansible sudo rule is present
   community.general.sudoers:

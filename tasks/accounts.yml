@@ -13,9 +13,9 @@
 
 - name: Ensure groups exists
   ansible.builtin.group:
-    state: "{{ item['state'] }}"
+    state: "{{ item['state'] | default('present') }}"
     name: "{{ item['name'] }}"
-    gid: "{{ lookup('ansible.builtin.vars', 'gid_' + item['name']) }}"
+    gid: "{{ item['gid'] }}"
   loop: "{{ common_groups }}"
 
 # Password hashes can be generated with `mkpasswd --method=sha-512`
@@ -23,27 +23,27 @@
   ansible.builtin.user:
     state: present
     name: root
-    password: "{{ lookup('ansible.builtin.vars', 'common_password_hash_root', default='!') }}"
+    password: "{{ common_password_hash_root | default('!') }}"
     update_password: 'always'
 
 - name: Ensure user accounts
   ansible.builtin.user:
-    state: "{{ item['state'] }}"
+    state: "{{ item['state'] | default('present') }}"
     name: "{{ item['name'] }}"
-    password: "{{ lookup('ansible.builtin.vars', 'common_password_hash_' + item['name'], default='!') }}"
-    comment: "{{ item['comment'] }}"
-    uid: "{{ lookup('ansible.builtin.vars', 'uid_' + item['name']) }}"
+    password: "{{ item['password_hash'] | default('!') }}"
+    comment: "{{ item['comment'] | default(omit) }}"
+    uid: "{{ item['uid'] }}"
     group: "{{ item['group'] }}"
-    groups: "{{ item['groups'] }}"
-    shell: "/bin/bash"
+    groups: "{{ item['groups'] | default(omit) }}"
+    shell: "{{ item['shell'] | default('/bin/bash') }}"
     append: false
   loop: "{{ common_users }}"
 
 - name: Ensure ssh keys
   ansible.posix.authorized_key:
-    state: "{{ item['state'] }}"
-    user: "{{ item['name'] }}"
-    key: "{{ lookup('ansible.builtin.vars', 'common_ssh_key_' + item['name'], default='') }}"
-  loop: "{{ common_users }}"
+    state: "present"
+    user: "{{ item[0]['name'] }}"
+    key: "{{ item[1] }}"
+  loop: "{{ common_users | subelements('ssh_authorized_keys') }}"
 
 ...
