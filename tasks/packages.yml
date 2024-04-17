@@ -1,4 +1,11 @@
 ---
+- name: Ensure APT sources configuration is present
+  ansible.builtin.template:
+    src: templates/apt_sources.list.j2
+    dest: /etc/apt/sources.list
+    mode: 'u=rw,g=r,o=r'
+  when: ansible_distribution == 'Debian'
+
 - name: Ensure Pacman configuration is present
   ansible.builtin.copy:
     src: pacman.conf
