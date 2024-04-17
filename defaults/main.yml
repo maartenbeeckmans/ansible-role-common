@@ -9,5 +9,9 @@ common_dns_servers:
 common_fallback_dns_servers:
   - 1.0.0.1
   - 8.8.4.4
+common_gid_ansible: 900
+common_gid_ssh: 1001
+common_gid_wheel: 1002
+common_uid_ansible: 900
 common_sshd_matches: {}
 ...
