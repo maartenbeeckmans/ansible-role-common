@@ -1,4 +1,11 @@
 ---
+- name: Ensure /var/log/journal exists
+  ansible.builtin.file:
+    state: directory
+    path: /var/log/journal
+    owner: root
+    group: systemd-journal
+    mode: 02755
 - name: Set /etc/systemd/journald.conf config
   ansible.builtin.copy:
     src: journald.conf
