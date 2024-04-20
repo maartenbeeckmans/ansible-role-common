@@ -5,13 +5,15 @@
     path: /var/log/journal
     owner: root
     group: systemd-journal
-    mode: 02755
+    mode: u=rwx,g=rx,o=rx
+
 - name: Set /etc/systemd/journald.conf config
   ansible.builtin.copy:
     src: journald.conf
     dest: /etc/systemd/journald.conf
     mode: 'u=rw,g=r,o=r'
   notify: Reload systemd-journald service
+
 - name: Ensure systemd-journald is running
   ansible.builtin.service:
     name: systemd-journald.service
