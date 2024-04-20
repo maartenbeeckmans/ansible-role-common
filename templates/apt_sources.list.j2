@@ -1,5 +1,4 @@
-# File managed by Ansible
-# Manual changes will be overwritten
+{{ ansible_managed | comment }}
 
 # {{ ansible_facts['distribution_release'] }} repositories
 deb http://httpredir.debian.org/debian {{ ansible_facts['distribution_release'] }} main contrib non-free non-free-firmware
