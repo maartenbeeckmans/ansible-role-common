@@ -3,6 +3,9 @@
   ansible.builtin.hostname:
     name: "{{ common_hostname | default(inventory_hostname) }}"
     use: systemd
+- name: Populate service facts
+  ansible.builtin.service_facts:
+  tags: facts
 - name: Setup accounts
   ansible.builtin.import_tasks: accounts.yml
   tags: accounts
