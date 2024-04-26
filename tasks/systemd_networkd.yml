@@ -38,8 +38,10 @@
     name: networking
   when: ansible_distribution == 'Debian' and 'networking' in services
 - name: Ensure ifupdown is removed
-  ansible.builtin.package:
+  ansible.builtin.apt:
     name: ifupdown
     state: absent
+    purge: true
+  when: ansible_distribution == 'Debian'
 
 ...
