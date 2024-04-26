@@ -12,4 +12,5 @@
     group: wheel
     nopassword: true
     commands: ALL
+
 ...

@@ -1,7 +1,7 @@
 ---
 - name: Set a hostname specifying strategy
   ansible.builtin.hostname:
-    name: "{{ common_hostname }}"
+    name: "{{ common_hostname | default(inventory_hostname) }}"
     use: systemd
 - name: Setup accounts
   ansible.builtin.import_tasks: accounts.yml
