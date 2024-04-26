@@ -2,26 +2,54 @@
 - name: Ensure firewalld is installed
   ansible.builtin.package:
     name: firewalld
-    state: absent
+    state: present
 
-# - name: Ensure firewalld service is running
-#   ansible.builtin.systemd:
-#     name: firewalld
-#     state: stopped
-#     enabled: true
+- name: Set firewalld config file
+  ansible.builtin.template:
+    src: templates/firewalld.conf.j2
+    dest: /etc/firewalld/firewalld.conf
+    mode: 'u=rw,g=r,o=r'
+  notify: Reload firewalld service
 
-# - name: Ensure public zone is present
-#   ansible.posix.firewalld:
-#     zone: public
-#     state: present
-#     permanent: true
-#     target: "DROP"
+- name: Ensure firewalld service is running
+  ansible.builtin.systemd:
+    name: firewalld
+    state: started
+    enabled: true
 
-# - name: Ensure internal zone is present
-#   ansible.posix.firewalld:
-#     zone: internal
-#     state: present
-#     permanent: true
-#     source: 192.168.128.0/23
+- name: Ensure firewalld zones are present
+  ansible.posix.firewalld:
+    state: "{{ item['state'] | default('enabled') }}"
+    source: "{{ item['source'] | default(omit) }}"
+    zone: "{{ item['name'] }}"
+    immediate: true
+    permanent: true
+  loop: "{{ common_firewalld_zones }}"
 
+- name: Ensure firewalld service rules are present
+  ansible.posix.firewalld:
+    state: "{{ item['state'] | default('enabled') }}"
+    service: "{{ item['service'] }}"
+    zone: "{{ item['zone'] | default(omit) }}"
+    permanent: true
+    immediate: true
+  loop: "{{ lookup('community.general.merge_variables', '_firewalld_service_rules', pattern_type='suffix') }}"
+
+- name: Ensure firewalld port rules are present
+  ansible.posix.firewalld:
+    state: "{{ item['state'] | default('enabled') }}"
+    port: "{{ item['port'] }}/{{ item['protocol'] | default('tcp') | lower }}"
+    zone: "{{ item['zone'] | default(omit) }}"
+    permanent: true
+    immediate: true
+  loop: "{{ lookup('community.general.merge_variables', '_firewalld_port_rules', pattern_type='suffix') }}"
+
+- name: Ensure firewalld rich rules are present
+  ansible.posix.firewalld:
+    state: "{{ item['state'] | default('enabled') }}"
+    rich_rule: "{{ item['rich_rule'] }}"
+    zone: "{{ item['zone'] | default(omit) }}"
+    permanent: true
+    immediate: true
+  loop: "{{ lookup('community.general.merge_variables', '_firewalld_rich_rules', pattern_type='suffix') }}"
 ...
