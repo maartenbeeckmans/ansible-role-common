@@ -11,6 +11,9 @@
     mode: 'u=rw,g=r,o=r'
   notify: Reload firewalld service
 
+- name: Flush handlers
+  ansible.builtin.meta: flush_handlers
+
 - name: Ensure firewalld service is running
   ansible.builtin.systemd:
     name: firewalld
@@ -52,4 +55,5 @@
     permanent: true
     immediate: true
   loop: "{{ lookup('community.general.merge_variables', '_firewalld_rich_rules', pattern_type='suffix') }}"
+
 ...

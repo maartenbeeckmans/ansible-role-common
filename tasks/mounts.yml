@@ -4,6 +4,7 @@
     fstype: "{{ item['fstype'] }}"
     dev: "{{ item['src'] }}"
   loop: "{{ common_mounts }}"
+
 - name: Create mount directories
   ansible.builtin.file:
     state: directory
@@ -12,6 +13,7 @@
     group: "{{ item['group'] }}"
     mode: "{{ item['mode'] }}"
   loop: "{{ common_mounts }}"
+
 - name: Mount disks
   ansible.posix.mount:
     state: "{{ item['state'] }}"

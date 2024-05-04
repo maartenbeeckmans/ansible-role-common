@@ -4,12 +4,17 @@
     state: present
     name: systemd-timesyncd
   when: ansible_distribution == 'Debian'
+
 - name: Set /etc/systemd/timesyncd.conf config
   ansible.builtin.copy:
     src: timesyncd.conf
     dest: /etc/systemd/timesyncd.conf
     mode: 'u=rw,g=r,o=r'
   notify: Reload systemd-timesyncd service
+
+- name: Flush handlers
+  ansible.builtin.meta: flush_handlers
+
 - name: Ensure systemd-timesyncd is running
   ansible.builtin.service:
     name: systemd-timesyncd.service

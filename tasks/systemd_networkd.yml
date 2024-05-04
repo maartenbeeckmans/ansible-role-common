@@ -27,16 +27,22 @@
     mode: 'u=rw,g=r,o=r'
   loop: "{{ common_interfaces }}"
   notify: Reload systemd-networkd service
+
 - name: Ensure systemd-networkd is running
   ansible.builtin.systemd:
     state: started
     enabled: true
     name: systemd-networkd
+
+- name: Flush handlers
+  ansible.builtin.meta: flush_handlers
+
 - name: Ensure Debian networking is disabled
   ansible.builtin.systemd:
     enabled: false
     name: networking
   when: ansible_distribution == 'Debian' and 'networking' in services
+
 - name: Ensure ifupdown is removed
   ansible.builtin.apt:
     name: ifupdown

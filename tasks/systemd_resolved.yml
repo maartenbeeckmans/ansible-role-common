@@ -4,17 +4,23 @@
     state: present
     name: systemd-resolved
   when: ansible_distribution == 'Debian'
+
 - name: Set /etc/systemd/resolved.conf template
   ansible.builtin.template:
     src: templates/resolved.conf.j2
     dest: /etc/systemd/resolved.conf
     mode: 'u=rw,g=r,o=r'
   notify: Reload systemd-resolved service
+
+- name: Flush handlers
+  ansible.builtin.meta: flush_handlers
+
 - name: Ensure systemd-resolved is running
   ansible.builtin.service:
     name: systemd-resolved.service
     state: started
     enabled: true
+
 - name: Create symbolic link to  /etc/systemd/resolved.conf
   ansible.builtin.file:
     state: link
