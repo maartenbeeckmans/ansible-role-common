@@ -3,20 +3,24 @@
   ansible.builtin.package:
     name: isc-dhcp-client
     state: absent
+
 - name: Ensure isc-dhcp-common is removed
   ansible.builtin.package:
     name: isc-dhcp-common
     state: absent
+
 - name: Ensure dhclient is removed
   ansible.builtin.package:
     name: dhclient
     state: absent
+
 - name: Set /etc/systemd/networkd.conf config
   ansible.builtin.copy:
     src: networkd.conf
     dest: /etc/systemd/networkd.conf
     mode: 'u=rw,g=r,o=r'
   notify: Reload systemd-networkd service
+
 - name: Ensure network configuration is present
   ansible.builtin.template:
     src: interface.network.j2
@@ -49,6 +53,7 @@
     state: absent
     purge: true
   when: ansible_distribution == 'Debian'
+
 - name: Ensure network-manager is removed
   ansible.builtin.package:
     name: network-manager

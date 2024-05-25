@@ -3,61 +3,80 @@
   ansible.builtin.hostname:
     name: "{{ common_hostname | default(inventory_hostname) }}"
     use: systemd
+
 - name: Populate service facts
   ansible.builtin.service_facts:
   tags: facts
+
 - name: Setup accounts
   ansible.builtin.import_tasks: accounts.yml
   tags: accounts
+
 - name: Setup ansible
   ansible.builtin.import_tasks: ansible.yml
   tags: ansible
+
 - name: Setup baremetal
   ansible.builtin.import_tasks: baremetal.yml
   tags: baremetal
   when: ansible_facts['virtualization_role'] == "host"
+
 - name: Setup firewalld
   ansible.builtin.import_tasks: firewalld.yml
   tags: firewalld
+
 - name: Setup hosts
   ansible.builtin.import_tasks: hosts.yml
   tags: hosts
+
 - name: Setup lvm
   ansible.builtin.import_tasks: lvm.yml
   tags: lvm
+
 - name: Setup motd
   ansible.builtin.import_tasks: motd.yml
   tags: motd
+
 - name: Setup mounts
   ansible.builtin.import_tasks: mounts.yml
   tags: mounts
+
 - name: Setup packages
   ansible.builtin.import_tasks: packages.yml
   tags: packages
+
 - name: Setup shell
   ansible.builtin.import_tasks: shell.yml
   tags: shell
+
 - name: Setup sshd
   ansible.builtin.import_tasks: sshd.yml
   tags: sshd
+
 - name: Setup sudo
   ansible.builtin.import_tasks: sudo.yml
   tags: sudo
+
 - name: Setup systemd_journald
   ansible.builtin.import_tasks: systemd_journald.yml
   tags: systemd_journald
+
 - name: Setup systemd_networkd
   ansible.builtin.import_tasks: systemd_networkd.yml
   tags: systemd_networkd
+
 - name: Setup systemd_resolved
   ansible.builtin.import_tasks: systemd_resolved.yml
   tags: systemd_resolved
+
 - name: Setup systemd_timesyncd
   ansible.builtin.import_tasks: systemd_timesyncd.yml
   tags: systemd_timesyncd
+
 - name: Setup systemd_timezone
   ansible.builtin.import_tasks: timezone.yml
   tags: timezone
+
 - name: Setup vm
   ansible.builtin.import_tasks: vm.yml
   tags: vm
