@@ -49,5 +49,10 @@
     state: absent
     purge: true
   when: ansible_distribution == 'Debian'
+- name: Ensure network-manager is removed
+  ansible.builtin.package:
+    name: network-manager
+    state: absent
+  when: ansible_distribution == 'Debian'
 
 ...
