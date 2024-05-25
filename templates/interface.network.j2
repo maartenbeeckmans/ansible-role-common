@@ -3,4 +3,10 @@
 Name={{ item.interface_name }}
 
 [Network]
+{% if 'address' in item %}
+Address={{ item.address }}
+Gateway={{ item.gateway }}
+LinkLocalAddressing=no
+{% else %}
 DHCP=yes
+{% endif %}
