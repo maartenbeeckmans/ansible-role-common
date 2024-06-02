@@ -3,6 +3,6 @@
   ansible.builtin.template:
     src: templates/motd.j2
     dest: /etc/motd
-    mode: 'u=rw,g=r,o=r'
+    mode: u=rw,g=r,o=r
 
 ...

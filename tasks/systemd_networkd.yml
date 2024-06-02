@@ -18,7 +18,7 @@
   ansible.builtin.copy:
     src: networkd.conf
     dest: /etc/systemd/networkd.conf
-    mode: 'u=rw,g=r,o=r'
+    mode: u=rw,g=r,o=r
   notify: Reload systemd-networkd service
 
 - name: Ensure network configuration is present
@@ -28,7 +28,7 @@
     owner: root
     group: root
     force: true
-    mode: 'u=rw,g=r,o=r'
+    mode: u=rw,g=r,o=r
   loop: "{{ common_interfaces }}"
   notify: Reload systemd-networkd service
 

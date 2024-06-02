@@ -9,7 +9,7 @@
   ansible.builtin.copy:
     src: timesyncd.conf
     dest: /etc/systemd/timesyncd.conf
-    mode: 'u=rw,g=r,o=r'
+    mode: u=rw,g=r,o=r
   notify: Reload systemd-timesyncd service
 
 - name: Flush handlers

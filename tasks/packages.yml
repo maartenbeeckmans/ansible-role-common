@@ -3,21 +3,21 @@
   ansible.builtin.template:
     src: templates/apt_sources.list.j2
     dest: /etc/apt/sources.list
-    mode: 'u=rw,g=r,o=r'
+    mode: u=rw,g=r,o=r
   when: ansible_distribution == 'Debian'
 
 - name: Ensure Pacman configuration is present
   ansible.builtin.copy:
     src: pacman.conf
     dest: /etc/pacman.conf
-    mode: 'u=rw,g=r,o=r'
+    mode: u=rw,g=r,o=r
   when: ansible_distribution == 'Archlinux'
 
 - name: Ensure Pacman mirrorlist is present
   ansible.builtin.copy:
     src: pacman_mirrorlist
     dest: /etc/pacman.d/mirrorlist
-    mode: 'u=rw,g=r,o=r'
+    mode: u=rw,g=r,o=r
   when: ansible_distribution == 'Archlinux'
 
 - name: Ensure cloud-init is removed
