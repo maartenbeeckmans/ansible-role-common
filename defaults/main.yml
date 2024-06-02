@@ -13,15 +13,5 @@ common_gid_ansible: 900
 common_gid_ssh: 1001
 common_gid_wheel: 1002
 common_uid_ansible: 900
-common_firewalld_zones:
-  - name: internal
-    source: "192.168.0.0/24"
-common_firewalld_default_zone: 'internal'
-common_firewalld_service_rules:
-  - zone: internal
-    service: ssh
-common_firewalld_port_rules: []
-common_firewalld_rich_rules: []
-common_firewalld_purge_unmanaged_rules: true
 common_sshd_matches: []
 ...

@@ -21,10 +21,6 @@
   tags: baremetal
   when: ansible_facts['virtualization_role'] == "host"
 
-- name: Setup firewalld
-  ansible.builtin.import_tasks: firewalld.yml
-  tags: firewalld
-
 - name: Setup hosts
   ansible.builtin.import_tasks: hosts.yml
   tags: hosts
